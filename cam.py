@@ -21,9 +21,9 @@ class Cam:
         self.up = up
     
     def render(self) -> np.ndarray:
-        w = (self.e-self.l) / np.linalg.norm(self.e-self.l)
-        u = np.cross(self.up, w) / np.linalg.norm(np.cross(self.up, w))
+        w = (self.e-self.l)/np.linalg.norm(self.e-self.l)
+        u = np.cross(self.up, w)/np.linalg.norm(np.cross(self.up, w))
         v = np.cross(w, u)
-        
+
         for (i, j) in itertools.product(range(self.v_res), range(self.h_res)):
             pass
