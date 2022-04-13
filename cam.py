@@ -2,7 +2,7 @@ import itertools
 from typing import List, Set, Tuple
 import numpy as np
 
-from .object import Object
+from object import Object
 class Cam:
     def __init__(
         self,
