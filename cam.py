@@ -10,7 +10,9 @@ class Cam:
         d: int,
         e: np.ndarray,
         l: np.ndarray,
-        up: np.ndarray
+        up: np.ndarray,
+
+        background_color: np.ndarray
     ) -> None:
         self.v_res = v_res
         self.h_res = h_res
@@ -19,6 +21,8 @@ class Cam:
         self.e = e
         self.l = l
         self.up = up
+
+        self.background_color = background_color
     
     def render(self) -> np.ndarray:
         img = np.array([[np.array([0, 0, 0])]*self.h_res]*self.v_res)
@@ -37,4 +41,13 @@ class Cam:
 
             q = self.e+(x*u)+(y*v)-(self.d*self.w)
             q = q/np.linalg.norm(q)
-            
+
+            img[i][j] = self.cast(self.e, q)
+    
+    def cast(self, o: np.ndarray, d: np.ndarray) -> np.ndarray:
+        c = self.background_color
+        s = self.trace(o, d)
+        if len(s) != 0:
+            t, closest = min(s)
+            c = closest.color
+        return c
