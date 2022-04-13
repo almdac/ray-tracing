@@ -19,7 +19,7 @@ def main():
             split = line.split(' ')
             element = split[3]
 
-            color = [float(n) for n in split[:3]]
+            color = np.array([float(n) for n in split[:3]])
             if element == '*':
                 center = np.array([float(n) for n in split[4:7]])
                 radius = split[7]
