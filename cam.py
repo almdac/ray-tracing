@@ -1,6 +1,8 @@
 import itertools
+from typing import List, Set, Tuple
 import numpy as np
 
+from .object import Object
 class Cam:
     def __init__(
         self,
@@ -12,7 +14,8 @@ class Cam:
         l: np.ndarray,
         up: np.ndarray,
 
-        background_color: np.ndarray
+        background_color: np.ndarray,
+        objects: List[Object]
     ) -> None:
         self.v_res = v_res
         self.h_res = h_res
@@ -23,6 +26,7 @@ class Cam:
         self.up = up
 
         self.background_color = background_color
+        self.objects = objects
     
     def render(self) -> np.ndarray:
         img = np.array([[np.array([0, 0, 0])]*self.h_res]*self.v_res)
@@ -51,3 +55,11 @@ class Cam:
             t, closest = min(s)
             c = closest.color
         return c
+
+    def trace(self, o: np.ndarray, d: np.ndarray) -> Set[Tuple[int, Object]]:
+        s = set()
+        for obj in self.objects:
+            t = obj.intersection(o, d)
+            if t:
+                s.add((t, obj))
+        return s
