@@ -47,6 +47,8 @@ class Cam:
             q = q/np.linalg.norm(q)
 
             img[i][j] = self.cast(self.e, q)
+        
+        return img
     
     def cast(self, o: np.ndarray, d: np.ndarray) -> np.ndarray:
         c = self.background_color
