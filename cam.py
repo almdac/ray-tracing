@@ -20,8 +20,8 @@ class Cam:
         self.l = l
         self.up = up
     
-    def render(self) -> list:
-        img = [[[0, 0, 0]]*self.h_res]*self.v_res
+    def render(self) -> np.ndarray:
+        img = np.array([[np.array([0, 0, 0])]*self.h_res]*self.v_res)
 
         w = self.e-self.l
         w = w/np.linalg.norm(w)
