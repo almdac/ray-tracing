@@ -43,7 +43,7 @@ class Cam:
             x = self.s*(j-(self.h_res/2)+0.5)
             y = self.s*(i-(self.v_res/2)+0.5)
 
-            q = self.e+(x*u)+(y*v)-(self.d*self.w)
+            q = self.e+(x*u)+(y*v)-(self.d*w)
             q = q/np.linalg.norm(q)
 
             img[i][j] = self.cast(self.e, q)
