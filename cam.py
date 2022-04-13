@@ -56,7 +56,7 @@ class Cam:
             c = closest.color
         return c
 
-    def trace(self, o: np.ndarray, d: np.ndarray) -> Set[Tuple[int, Object]]:
+    def trace(self, o: np.ndarray, d: np.ndarray) -> Set[Tuple[float, Object]]:
         s = set()
         for obj in self.objects:
             t = obj.intersection(o, d)
