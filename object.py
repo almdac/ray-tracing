@@ -20,3 +20,10 @@ class Plane(Object):
 
         self.p = point
         self.n = normal
+
+    def intersection(self, o: np.ndarray, d: np.ndarray) -> float:
+        den = np.dot(d, self.n)
+        if np.linalg.norm(den) > 10e-6:
+            t = np.dot((self.p-o), self.n)/den
+            if t >= 0:
+                return t
