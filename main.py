@@ -1,3 +1,5 @@
+import array
+
 import numpy as np
 
 from cam import Cam
@@ -37,13 +39,10 @@ def main():
     cam = Cam(v_res, h_res, s, d, e, l, up, background_color, objects)
     
     img = cam.render()
-    with open('output.ppm', 'w') as f:
-        f.write('p6\n')
-        f.write(f'{v_res} {h_res}\n')
-        f.write('255\n')
-        for row in img:
-            for pixel in row:
-                f.write(f'{pixel[0]} {pixel[1]} {pixel[2]}\n')
+    with open('output.ppm', 'wb') as f:
+        f.write(bytearray(f'P6 {h_res} {v_res} 255\n', 'ascii'))
+        byteimg = array.array('B', list(img.flatten()))
+        byteimg.tofile(f)
 
 if __name__ == '__main__':
     main()
