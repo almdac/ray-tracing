@@ -39,11 +39,10 @@ class Cam:
 
         v = np.cross(w, u)
 
-        for (i, j) in itertools.product(range(self.v_res), range(self.h_res)):
-            x = self.s*(j-(self.h_res/2)+0.5)
-            y = -self.s*(i-(self.v_res/2)+0.5)
+        q0 = self.e-(self.d*w)+self.s*((v*((self.v_res-1)/2))-(u*((self.h_res-1)/2)))
 
-            q = (x*u)+(y*v)-(self.d*w)-self.e
+        for (i, j) in itertools.product(range(self.v_res), range(self.h_res)):
+            q = q0+self.s*((j*u)-(i*v))-self.e
             q = q/np.linalg.norm(q)
 
             img[i][j] = self.cast(self.e, q)
