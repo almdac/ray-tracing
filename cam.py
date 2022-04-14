@@ -41,7 +41,7 @@ class Cam:
 
         for (i, j) in itertools.product(range(self.v_res), range(self.h_res)):
             x = self.s*(j-(self.h_res/2)+0.5)
-            y = self.s*(i-(self.v_res/2)+0.5)
+            y = -self.s*(i-(self.v_res/2)+0.5)
 
             q = self.e+(x*u)+(y*v)-(self.d*w)
             q = q/np.linalg.norm(q)
