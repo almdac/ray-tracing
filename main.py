@@ -24,7 +24,7 @@ def main():
             color = np.array([float(n) for n in split[:3]])
             if element == '*':
                 center = np.array([float(n) for n in split[4:7]])
-                radius = split[7]
+                radius = float(split[7])
 
                 sphere = Sphere(color, center, radius)
                 objects.append(sphere)
