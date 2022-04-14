@@ -23,7 +23,7 @@ class Sphere(Object):
         if co <= self.r: # Se o cateto oposto for maior que o raio, não há intersecção com a esfera
             t_ca = ((self.r**2)-(co**2))**0.5 # O cateto adjascente da intersecção é obtido através de pitágoras, onde o raio é a hipotenusa
             intersections = sorted([ca-t_ca, ca+t_ca]) # Haverão dois pontos de intersecção (entrada e saída da esfera)
-            t = next(iter([i for i in intersections if i > 0])) # A intersecção acontece somente na frente da câmera, logo um escalar negativo muda a direção de captura e não é válido
+            t = next(iter([i for i in intersections if i >= 0])) # A intersecção acontece somente na frente da câmera, logo um escalar negativo muda a direção de captura e não é válido
             return t
 
 class Plane(Object):
