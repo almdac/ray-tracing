@@ -1,15 +1,31 @@
 import numpy as np
 
 class Object:
-    def __init__(self, color: np.ndarray) -> None:
+    def __init__(self,
+                 color: np.ndarray,
+                 ka: int, 
+                 kd: int,
+                 ks: int,
+                 eta: int) -> None:
         self.color = color
+        self.ka = ka
+        self.kd = kd
+        self.ks = ks
+        self.eta = eta
     
     def intersection(self, o: np.ndarray, d: np.ndarray) -> float:
         raise NotImplementedError
 
 class Sphere(Object):
-    def __init__(self, color: np.ndarray, center: np.ndarray, radius: float) -> None:
-        super().__init__(color)
+    def __init__(self,
+                 color: np.ndarray,
+                 ka: int, 
+                 kd: int,
+                 ks: int,
+                 eta: int,
+                 center: np.ndarray,
+                 radius: float) -> None:
+        super().__init__(color, ka, kd, ks, eta)
 
         self.c = center
         self.r = radius
@@ -27,8 +43,15 @@ class Sphere(Object):
             return t
 
 class Plane(Object):
-    def __init__(self, color: np.ndarray, point: np.ndarray, normal: np.ndarray) -> None:
-        super().__init__(color)
+    def __init__(self,
+                 color: np.ndarray,
+                 ka: int, 
+                 kd: int,
+                 ks: int,
+                 eta: int,
+                 point: np.ndarray,
+                 normal: np.ndarray) -> None:
+        super().__init__(color, ka, kd, ks, eta)
 
         self.p = point
         self.n = normal
