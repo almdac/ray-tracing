@@ -42,7 +42,7 @@ class Sphere(Object):
             t = ca - t_ca
             n = o + t*d - self.c
             n /= np.linalg.norm(n)
-            return t, n, o+t*d, -1*d, self.ka, self.kd, self.ks, self.eta
+            return tuple([t, n, o+t*d, -1*d, self.ka, self.kd, self.ks, self.eta, self.color])
 
 class Plane(Object):
     def __init__(self,
@@ -63,4 +63,4 @@ class Plane(Object):
         if np.linalg.norm(den) > 10e-6:
             t = np.dot((self.p-o), self.n)/den
             if t >= 0:
-                return t, self.n, o+t*d, -1*d, self.ka, self.kd, self.ks, self.eta
+                return tuple([t, self.n, o+t*d, -1*d, self.ka, self.kd, self.ks, self.eta, self.color])

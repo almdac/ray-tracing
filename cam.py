@@ -15,7 +15,9 @@ class Cam:
         up: np.ndarray,
 
         background_color: np.ndarray,
-        objects: List[Object]
+        objects: List[Object],
+        lights,
+        ca
     ) -> None:
         self.v_res = v_res
         self.h_res = h_res
@@ -27,6 +29,8 @@ class Cam:
 
         self.background_color = background_color
         self.objects = objects
+        self.lights = lights
+        self.ca = ca
     
     def render(self) -> np.ndarray:
         img = np.array([[np.array([0, 0, 0])]*self.h_res]*self.v_res)
@@ -53,14 +57,32 @@ class Cam:
         c = self.background_color
         s = self.trace(o, d)
         if len(s) != 0:
-            t, closest = min(s)
-            c = closest.color
+            values = min(s, key= lambda x: x[0])
+            c = self.calc_ilumination(values)
         return c
 
     def trace(self, o: np.ndarray, d: np.ndarray) -> Set[Tuple[float, Object]]:
-        s = set()
+        s = []
         for obj in self.objects:
-            t = obj.intersection(o, d)
-            if t:
-                s.add((t, obj))
+            values = obj.intersection(o, d)
+            if values:
+                s.append(values)
         return s
+
+    def calc_ilumination(self, values):
+        _, n, p, omega, ka, kd, ks, eta, cd = values
+        color = np.array([0.0,0.0,0.0])
+        color += ka*cd*self.ca / 255
+        for light in self.lights:
+            l = light[1] - p
+            l /= np.linalg.norm(l)
+            s = self.trace(p + n*0.00001, l)
+            if s:
+                distance, _, _, _, _, _, _, _, _ = min(s, key= lambda x: x[0])
+                if distance < np.linalg.norm(light[1] - p):
+                    continue
+            r = 2*np.dot(n, l)*n - l
+            color += kd*cd*max([0, np.dot(n, l)])*light[0] / 255
+            color += ks*((max([0, np.dot(r, omega)]))**eta)*light[0]
+        color = np.array([min(c, 255) for c in color])
+        return color
